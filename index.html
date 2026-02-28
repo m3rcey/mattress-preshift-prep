@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Shift Prep | Crush It Today</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); min-height: 100vh; padding: 20px; color: #fff; }
+        .container { max-width: 600px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 8px; font-size: 1.6rem; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 24px; font-size: 0.9rem; }
+        
+        .card { background: #1e1e2e; border-radius: 12px; padding: 20px; margin-bottom: 16px; border: 1px solid #333; }
+        .card h2 { color: #00d4aa; margin-bottom: 14px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        
+        .affirmation { background: #252540; padding: 16px; border-radius: 10px; margin-bottom: 10px; text-align: center; }
+        .affirmation-text { font-size: 1.1rem; font-style: italic; color: #ddd; line-height: 1.5; }
+        
+        .affirm-nav { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+        .affirm-btn { background: #333; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+        .affirm-btn:hover { background: #444; }
+        .affirm-btn.refresh { background: #00d4aa; color: #000; }
+        
+        .goal-input { display: flex; gap: 10px; margin-bottom: 12px; }
+        .goal-input input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #252540; color: #fff; font-size: 1rem; }
+        .goal-input input:focus { outline: none; border-color: #00d4aa; }
+        
+        .goal-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #333; }
+        .goal-row:last-child { border-bottom: none; }
+        .goal-label { color: #aaa; font-size: 0.9rem; }
+        .goal-value { font-weight: 600; font-size: 1.1rem; color: #00d4aa; }
+        
+        .tip-list { list-style: none; }
+        .tip-list li { padding: 10px 0; padding-left: 20px; position: relative; color: #ccc; font-size: 0.9rem; }
+        .tip-list li::before { content: "→"; position: absolute; left: 0; color: #ffdd57; }
+        
+        .checklist { list-style: none; }
+        .checklist li { padding: 10px 0; border-bottom: 1px solid #333; display: flex; align-items: center; gap: 10px; }
+        .checklist li:last-child { border-bottom: none; }
+        .checkbox { width: 22px; height: 22px; border: 2px solid #444; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .checkbox.checked { background: #00d4aa; border-color: #00d4aa; }
+        .checkbox.checked::after { content: "✓"; color: #000; font-weight: bold; }
+        .checklist span { color: #ddd; font-size: 0.9rem; }
+        
+        .weather { display: flex; gap: 12px; justify-content: center; margin-bottom: 16px; }
+        .weather-item { text-align: center; }
+        .weather-icon { font-size: 2rem; }
+        .weather-temp { font-size: 1.4rem; font-weight: 600; color: #00d4aa; }
+        .weather-desc { font-size: 0.8rem; color: #888; }
+        
+        .quote { text-align: center; padding: 16px; background: #252540; border-radius: 10px; }
+        .quote-text { font-size: 1rem; color: #ddd; font-style: italic; line-height: 1.5; }
+        .quote-author { color: #888; font-size: 0.85rem; margin-top: 8px; }
+        
+        .streak { text-align: center; padding: 16px; background: linear-gradient(135deg, #00d4aa20, #16213e); border-radius: 10px; border: 1px solid #00d4aa; }
+        .streak-num { font-size: 2.5rem; font-weight: 700; color: #00d4aa; }
+        .streak-label { color: #888; font-size: 0.9rem; }
+        
+        .motivation { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .mot-btn { padding: 12px; border: 1px solid #444; border-radius: 8px; background: #2a2a3e; color: #ccc; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+        .mot-btn:hover { border-color: #00d4aa; color: #00d4aa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Pre-Shift Prep</h1>
+        <p class="subtitle">Get in the zone. Crush it today.</p>
+        
+        <div class="streak">
+            <div class="streak-num" id="streak">0</div>
+            <div class="streak-label">day streak — keep it going!</div>
+        </div>
+        
+        <div class="card">
+            <h2>💪 Today's Affirmation</h2>
+            <div class="affirmation">
+                <div class="affirmation-text" id="affirm-text">"I am a sales champion. Every customer is an opportunity to change someone's life through better sleep."</div>
+            </div>
+            <div class="affirm-nav">
+                <button class="affirm-btn" onclick="prevAffirm()">← Prev</button>
+                <button class="affirm-btn refresh" onclick="newAffirm()">🎲 New</button>
+                <button class="affirm-btn" onclick="nextAffirm()">Next →</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>⭐ Today's Goals</h2>
+            <div class="goal-row">
+                <span class="goal-label">Units to Sell</span>
+                <span class="goal-value" id="goal-units">3</span>
+            </div>
+            <div class="goal-row">
+                <span class="goal-label">Revenue Target</span>
+                <span class="goal-value" id="goal-revenue">$4,500</span>
+            </div>
+            <div class="goal-row">
+                <span class="goal-label">Upsell Attach Rate</span>
+                <span class="goal-value" id="goal-upsell">70%</span>
+            </div>
+            <div class="goal-row">
+                <span class="goal-label">Customer Satisfaction</span>
+                <span class="goal-value" id="goal-nps">5 ⭐</span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>✅ Pre-Shift Checklist</h2>
+            <ul class="checklist">
+                <li><div class="checkbox" onclick="toggle(this)"></div><span>Water bottle filled</span></li>
+                <li><div class="checkbox" onclick="toggle(this)"></div><span>Phone charged</span></li>
+                <li><div class="checkbox" onclick="toggle(this)"></div><span>Business cards ready</span></li>
+                <li><div class="checkbox" onclick="toggle(this)"></div><span>Read 1 product update</span></li>
+                <li><div class="checkbox" onclick="toggle(this)"></div><span>Smile & warm-up voice</span></li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>💡 Today's Mindset</h2>
+            <div class="quote" id="quote-box">
+                <div class="quote-text">"The secret of success is to do the common thing uncommonly well."</div>
+                <div class="quote-author">— John D. Rockefeller Jr.</div>
+            </div>
+            <div class="motivation">
+                <button class="mot-btn" onclick="newQuote()">🎲 New Quote</button>
+                <button class="mot-btn" onclick="resetChecklist()">↻ Reset Checklist</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🎯 Top 3 Priorities Today</h2>
+            <ol class="tip-list">
+                <li>Warm every customer with genuine interest</li>
+                <li>Offer protection plan to EVERY sale</li>
+                <li>Ask for referrals at close</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        const affirmations = [
+            "I am a sales champion. Every customer is an opportunity to change someone's life through better sleep.",
+            "I close with confidence. I help people make the best decision for their sleep.",
+            "My goal today: 3+ units, 70%+ attach rate, and 5-star reviews.",
+            "Every 'no' gets me closer to a 'yes'. I never take rejection personally.",
+            "I am the expert. Customers come to me because I know mattresses better than anyone.",
+            "Today I will outwork everyone. Hunger beats talent when talent doesn't work hard.",
+            "I turn objections into opportunities. Every concern is a chance to demonstrate value.",
+            "My energy is contagious. Customers feel my passion for better sleep.",
+            "I don't sell mattresses — I sell better lives through better sleep.",
+            "Small actions, big results. Today I nail the fundamentals."
+        ];
+        
+        const quotes = [
+            { text: "The secret of success is to do the common thing uncommonly well.", author: "John D. Rockefeller Jr." },
+            { text: "Sales are about serving, not selling.", author: "Unknown" },
+            { text: "The more you sell, the more you help.", author: "Zig Ziglar" },
+            { text: "Every expert was once a beginner.", author: "Helen Hayes" },
+            { text: "Success is not final, failure is not fatal.", author: "Winston Churchill" },
+            { text: "The only limit to our realization of tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" },
+            { text: "Quality is not an act, it is a habit.", author: "Aristotle" },
+            { text: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+            { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+            { text: "Your network is your net worth.", author: "Porter Gale" }
+        ];
+        
+        let affirmIndex = 0;
+        
+        function newAffirm() {
+            affirmIndex = Math.floor(Math.random() * affirmations.length);
+            document.getElementById('affirm-text').textContent = '"' + affirmations[affirmIndex] + '"';
+        }
+        
+        function prevAffirm() {
+            affirmIndex = (affirmIndex - 1 + affirmations.length) % affirmations.length;
+            document.getElementById('affirm-text').textContent = '"' + affirmations[affirmIndex] + '"';
+        }
+        
+        function nextAffirm() {
+            affirmIndex = (affirmIndex + 1) % affirmations.length;
+            document.getElementById('affirm-text').textContent = '"' + affirmations[affirmIndex] + '"';
+        }
+        
+        let quoteIndex = 0;
+        
+        function newQuote() {
+            quoteIndex = Math.floor(Math.random() * quotes.length);
+            const q = quotes[quoteIndex];
+            document.getElementById('quote-box').innerHTML = `
+                <div class="quote-text">"${q.text}"</div>
+                <div class="quote-author">— ${q.author}</div>
+            `;
+        }
+        
+        function toggle(el) {
+            el.classList.toggle('checked');
+        }
+        
+        function resetChecklist() {
+            document.querySelectorAll('.checkbox').forEach(c => c.classList.remove('checked'));
+        }
+        
+        // Load streak from localStorage
+        const today = new Date().toDateString();
+        let lastVisit = localStorage.getItem('preshift-lastvisit');
+        let streak = parseInt(localStorage.getItem('preshift-streak') || '0');
+        
+        if (lastVisit !== today) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            if (lastVisit === yesterday.toDateString()) {
+                streak++;
+            } else if (lastVisit !== today) {
+                streak = 1;
+            }
+            localStorage.setItem('preshift-streak', streak);
+            localStorage.setItem('preshift-lastvisit', today);
+        }
+        
+        document.getElementById('streak').textContent = streak;
+    </script>
+</body>
+</html>
